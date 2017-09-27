@@ -1,0 +1,29 @@
+{
+  "name": "gimli-crypto",
+  "version": "1.0.0",
+  "description": "Gimli cryptographic pseudorandom permutation and sponge-based hash function",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js && node test/bench.js",
+    "test-browser": "browserify test/bench.js test/test.js  | indexhtmlify > test/index.html && echo Please open test/index.html"
+  },
+  "keywords": [
+    "gimli",
+    "crypto",
+    "sponge",
+    "hash",
+    "kdf",
+    "cipher",
+    "encryption"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dchest/gimli-js.git"
+  },
+  "author": "Dmitry Chestnykh",
+  "license": "Unlicense",
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "indexhtmlify": "^1.3.1"
+  }
+}
