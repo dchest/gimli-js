@@ -1,6 +1,6 @@
 {
   "name": "gimli-crypto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gimli cryptographic pseudorandom permutation and sponge-based hash function",
   "main": "index.js",
   "scripts": {
