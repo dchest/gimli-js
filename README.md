@@ -34,7 +34,7 @@ gimli(state);
 ### Hash (eXtended Output Function)
 
 ```js
-var hash = require('gimli-crypto').gimli;
+var hash = require('gimli-crypto').hash;
 
 // 32-byte digest of [1,2,3,4,5,6] calculated in two steps.
 var digest = hash()
