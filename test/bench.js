@@ -1,5 +1,6 @@
 const gimli = require('../gimli');
 const hash = require('../hash');
+const b = require('@stablelib/benchmark')
 
 if (process.browser) {
     olog = console.log;
@@ -15,38 +16,31 @@ if (process.browser) {
 }
 
 function bench() {
-    var begin = Date.now();
-    var times = 50 * 64 * 1024;
     var state = new Uint8Array(48);
-    for (var i = 0; i < times; i++) gimli(state);
-    var diff = Date.now() - begin;
-    console.log(diff + 'ms per ' + times + ' ops')
-    console.log('rate: 128', 50 * 1000 / diff + ' MiB/s');
-    console.log('rate:full', 50 * 1000 * 3 / diff + ' MiB/s');
+    b.report("Gimli (rate: 128)", b.benchmark(function() {
+        gimli(state)
+    }, 16));
+    b.report("Gimli (rate: full)", b.benchmark(function () {
+        gimli(state)
+    }, 48));
 }
 
-function benchhash() {
-    var d = new Uint8Array(1024);
-    var begin = Date.now();
+function benchhashwrite() {
     var h = hash();
-    for (var i = 0; i < 1024; i++) h.write(d);
-    h.read();
-    var diff = Date.now() - begin;
-    console.log(diff + 'ms per 1 MB');
-    console.log('hash: ', 1000 / diff + ' MiB/s');
+    var d = new Uint8Array(1024);
+    b.report("Gimli hash (write)", b.benchmark(function () {
+        h.write(d);
+    }, 1024));
 }
 
-function benchread() {
-    var d = new Uint8Array(1024);
-    var begin = Date.now();
+function benchhashread() {
     var h = hash();
-    h.write(new Uint8Array(32)); // key
-    for (var i = 0; i < 1024; i++) h.read(d);
-    var diff = Date.now() - begin;
-    console.log(diff + 'ms per 1 MB');
-    console.log('read: ', 1000 / diff + ' MiB/s');
+    var d = new Uint8Array(1024);
+    b.report("Gimli hash (read)", b.benchmark(function () {
+        h.read(d);
+    }, 1024));
 }
 
 bench();
-benchhash();
-benchread();
+benchhashwrite();
+benchhashread();
